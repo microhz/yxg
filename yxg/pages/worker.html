@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>一休哥后台系统</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <!-- <link href="narrow-jumbotron.css" rel="stylesheet"> -->
+</head>
+
+<style>
+    input[type=text],
+    select {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=submit] {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+
+    div {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+    }
+</style>
+
+<body>
+
+
+    <div class="jumbotron">
+        <h1 class="display-3">信息查询系统</h1>
+    </div>
+
+    <div class="container">
+        <h2>查询师傅信息</h2>
+        <div class="form-group">
+            <label for="usr">输入师傅名字:</label>
+            <input id="name" type="text" class="form-control" id="usr">
+
+        </div>
+        <div>
+            <button id="searchWorker" type="button" class="btn btn-primary">查询</button>
+        </div>
+
+        <!DOCTYPE html>
+        <html>
+
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        </head>
+
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>姓名</th>
+                        <th>电话</th>
+                        <th>地址</th>
+                    </tr>
+                </thead>
+                <tbody id="work_table">
+                    <!-- <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>Anna</td>
+                                <td>Pitt</td>
+                            </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- 添加工人信息 -->
+    <div class="container">
+        <h2>添加师傅信息</h2>
+        <form>
+            <label for="fname">师傅名称</label>
+            <input type="text" id="worker_name" name="worker_name" placeholder="请输入名称">
+
+            <label for="fname">电话</label>
+            <input type="text" id="tel" name="tel" placeholder="电话">
+
+            <label for="lname">地址</label>
+            <input type="text" id="address" name="id_card" placeholder="地址">
+
+
+            <!-- <label for="country">Country</label>
+                    <select id="country" name="country">
+                        <option value="australia">Australia</option>
+                        <option value="canada">Canada</option>
+                        <option value="usa">USA</option>
+                      </select> -->
+
+            <input type="submit" value="Submit" id="insert_work">
+        </form>
+
+</body>
+
+</html>
+
+</div>
+<!-- /container -->
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script>
+    // 查询工人信息
+    $("#searchWorker").click(function () {
+        // alert("欢迎查询");
+        // 获取师傅名字
+        name = $("#name").val();
+
+        // 发送ajax请求
+        $.ajax({
+            method: "GET",
+            url: "http://127.0.0.1:8000/getWorkerInfoByName",
+            data: { work_name: name },
+            dataType: 'json',
+            success: function (data) {
+                if (data.isSuccess) {
+                    work_list = data.data;
+                    $("#work_table").empty();
+                    for (var i = 0; i < work_list.length; i++) {
+                        work = work_list[i]
+                        $("#work_table").append('<tr><td>' + work['id'] + '</td>' + '<td>' + work['name'] + '</td>' + '<td>' + work['tel'] + '</td>' + '<td>' + work['address'] + '</td></tr>');
+                    }
+                } else {
+                    alert(data.msg);
+                }
+            },
+            error: function (e) {
+                alert('服务器异常');
+            }
+        });
+    })
+
+    // 添加师傅信息
+    $("#insert_work").click(function () {
+        work_name = $('#worker_name').val()
+        tel = $('#tel').val()
+        // id_card = $("#id_card").val()
+        // remark = $('#remark').val()
+        address = $("#address").val()
+        // 发送ajax请求
+        $.ajax({
+            method: "GET",
+            url: "http://127.0.0.1:8000/insertWorker",
+            data: {
+                work_name: work_name,
+                tel: tel,
+                address: address
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.isSuccess) {
+                    alert("保存成功");
+                } else {
+                    alert("保存失败");
+                }
+            },
+            error: function (e) {
+                alert(e.responseText);
+            }
+        });
+    })
+
+</script>
+</body>
+
+</html>
