@@ -55,7 +55,7 @@ def execute_sql(sql):
                            password="root",
                            database="premetheus",
                            port=3306,
-                           charset='utflocal8')
+                           charset='utf8')
     cur = conn.cursor(pymysql.cursors.DictCursor)
     print('execute sql ' + sql)
     try :
