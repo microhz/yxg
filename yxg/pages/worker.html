@@ -148,7 +148,7 @@
         // 发送ajax请求
         $.ajax({
             method: "GET",
-            url: "http://127.0.0.1:8000/getWorkerInfoByName",
+            url: "/getWorkerInfoByName",
             data: { work_name: name },
             dataType: 'json',
             success: function (data) {
@@ -179,7 +179,7 @@
         // 发送ajax请求
         $.ajax({
             method: "GET",
-            url: "http://127.0.0.1:8000/insertWorker",
+            url: "/insertWorker",
             data: {
                 work_name: work_name,
                 tel: tel,

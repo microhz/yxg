@@ -25,7 +25,7 @@ SECRET_KEY = 'n!6i!ns1r=-u!qo1!-^l8f71jq)i@7&2#ne^w^d5u-cxkfhxtn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
 ## 页面模版存放路径
 TEMPLATE_DIRS = [
     BASE_DIR + '/pages/'
