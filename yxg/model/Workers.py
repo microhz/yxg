@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 ## 与workers表对应的
 class Workers :
     def __init__(self, ** args) :
